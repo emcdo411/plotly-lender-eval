@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plotly Lender Eval — No Hype. All Signal.</title>
+<meta name="description" content="A public-signal, evidence-tagged evaluation of Plotly Skills for regulated title and lending environments. Every claim tagged. Every gap named.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0F0E;
+    --bg-alt:#151817;
+    --card:#1B1E1C;
+    --paper:#F3EFE4;
+    --ink:#F5F3EE;
+    --ink-on-paper:#14140F;
+    --muted:#9CA39C;
+    --muted-on-paper:#5B5A4E;
+    --energy:#FF4426;
+    --energy-2:#FFB627;
+    --signal:#2E8FFF;
+    --good:#34D399;
+    --line:rgba(245,243,238,0.12);
+    --line-paper:#14140F;
+    --radius:14px;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.92;
+    margin:0;
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.04em;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  img,svg{display:block;max-width:100%;}
+  ::selection{background:var(--energy);color:#0D0F0E;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--energy-2);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,15,14,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;max-width:var(--maxw);margin:0 auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:0.02em;
+  }
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--energy);box-shadow:0 0 12px var(--energy);flex:none;}
+  nav.links{display:flex;gap:28px;align-items:center;}
+  nav.links a{
+    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted);transition:color .2s;
+  }
+  nav.links a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--energy);color:#0D0F0E;padding:10px 18px;border-radius:999px;
+    font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;
+    white-space:nowrap;
+  }
+  @media(max-width:820px){
+    nav.links{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:96px 24px 64px;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255,68,38,0.28), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(46,143,255,0.18), transparent 55%),
+      var(--bg);
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;position:relative;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;font-weight:600;color:var(--energy-2);
+    background:rgba(255,182,39,0.08);border:1px solid rgba(255,182,39,0.3);
+    padding:8px 14px;border-radius:999px;margin-bottom:28px;
+  }
+  .eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--energy-2);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+  .hero h1{
+    font-size:clamp(48px,9vw,120px);
+    background:linear-gradient(180deg,#FFFFFF 0%, #F5F3EE 55%, #C9C6BE 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(90deg,var(--energy) 0%, var(--energy-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-sub{
+    max-width:640px;margin:28px 0 40px;
+    font-size:18px;line-height:1.6;color:var(--muted);
+  }
+  .hero-sub strong{color:var(--ink);}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:64px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 28px;border-radius:999px;
+    font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:0.05em;
+    transition:transform .18s ease, box-shadow .18s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg,var(--energy),var(--energy-2));
+    color:#170D08;
+    box-shadow:0 10px 30px -8px rgba(255,68,38,0.55);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px -6px rgba(255,68,38,0.65);}
+  .btn-ghost{
+    background:transparent;color:var(--ink);border-color:var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--signal);color:var(--signal);transform:translateY(-2px);}
+
+  .stat-strip{
+    display:grid;grid-template-columns:repeat(6,1fr);
+    border-top:1px solid var(--line);
+  }
+  .stat{
+    padding:22px 18px;border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:900;
+    font-size:clamp(26px,3.4vw,40px);
+    color:var(--ink);
+    display:block;
+  }
+  .stat .num .unit{font-size:0.5em;color:var(--energy-2);margin-left:2px;}
+  .stat .label{
+    display:block;margin-top:6px;font-size:11px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.06em;font-weight:600;
+  }
+  @media(max-width:900px){
+    .stat-strip{grid-template-columns:repeat(3,1fr);}
+    .stat:nth-child(3){border-right:none;}
+  }
+  @media(max-width:520px){
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2n){border-right:none;}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head .kicker{
+    font-size:12px;font-weight:700;color:var(--signal);
+    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;display:block;
+  }
+  .section-head h2{font-size:clamp(32px,5vw,56px);}
+  .section-head p{margin-top:16px;color:var(--muted);font-size:16px;line-height:1.7;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- METHOD ---------- */
+  .method{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:900px){.method-grid{grid-template-columns:1fr;}}
+  .method-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:32px 26px;position:relative;overflow:hidden;
+  }
+  .method-card::before{
+    content:"";position:absolute;top:-40%;right:-30%;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(255,68,38,0.16),transparent 70%);
+  }
+  .method-num{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:900;font-size:52px;
+    color:transparent;-webkit-text-stroke:1.5px var(--energy-2);
+    margin-bottom:18px;display:block;
+  }
+  .method-card h3{font-size:22px;margin-bottom:6px;color:var(--ink);}
+  .method-card .tag{
+    display:inline-block;font-size:11px;color:var(--signal);margin-bottom:16px;
+    font-weight:600;letter-spacing:0.04em;
+  }
+  .method-card p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0;}
+
+  /* ---------- EVIDENCE FACTS (PAPER PANEL) ---------- */
+  .facts-section{background:var(--paper);color:var(--ink-on-paper);}
+  .facts-wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;}
+  @media(max-width:900px){.facts-wrap{grid-template-columns:1fr;}}
+  .facts-section .kicker{color:#B23412;}
+  .facts-section .section-head h2{color:var(--ink-on-paper);}
+  .facts-section .section-head p{color:var(--muted-on-paper);}
+  .facts-copy p{color:var(--muted-on-paper);font-size:15.5px;line-height:1.75;}
+  .facts-copy ul{padding-left:20px;color:var(--muted-on-paper);font-size:15px;line-height:1.8;}
+  .facts-copy li{margin-bottom:8px;}
+
+  .label-box{
+    background:#FFFDF7;border:3px solid var(--ink-on-paper);border-radius:2px;
+    padding:20px 22px 8px;font-family:'IBM Plex Mono',monospace;
+  }
+  .label-box h3{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:900;
+    font-size:30px;text-transform:uppercase;border-bottom:8px solid var(--ink-on-paper);
+    padding-bottom:8px;margin-bottom:4px;
+  }
+  .label-sub{
+    display:flex;justify-content:space-between;font-size:12px;font-weight:600;
+    border-bottom:1px solid var(--ink-on-paper);padding:6px 0;
+  }
+  .label-sub.thick{border-bottom:5px solid var(--ink-on-paper);}
+  .tag-row{
+    display:flex;justify-content:space-between;gap:14px;
+    padding:12px 0;border-bottom:1px solid #C9C4B3;
+  }
+  .tag-row:last-of-type{border-bottom:none;}
+  .tag-row .tag-name{font-weight:700;font-size:13px;letter-spacing:0.02em;}
+  .tag-row .tag-name.verified{color:#0A7A4E;}
+  .tag-row .tag-name.inferred{color:#0B5DBD;}
+  .tag-row .tag-name.hypothesis{color:#B36B00;}
+  .tag-row .tag-name.absence{color:#8A2C1F;}
+  .tag-row .tag-desc{font-size:12px;color:var(--muted-on-paper);text-align:right;max-width:190px;}
+  .label-footnote{font-size:10.5px;color:var(--muted-on-paper);margin-top:14px;padding-top:10px;border-top:2px solid var(--ink-on-paper);line-height:1.6;}
+
+  /* ---------- FINDINGS ---------- */
+  .findings{border-top:1px solid var(--line);}
+  .doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:64px;}
+  @media(max-width:900px){.doc-grid{grid-template-columns:1fr;}}
+  .doc-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:34px;display:flex;flex-direction:column;gap:18px;
+    transition:border-color .2s, transform .2s;
+  }
+  .doc-card:hover{border-color:var(--energy);transform:translateY(-4px);}
+  .doc-card .file-tag{
+    align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--energy-2);background:rgba(255,182,39,0.1);border:1px solid rgba(255,182,39,0.3);
+    padding:5px 10px;border-radius:6px;
+  }
+  .doc-card h3{font-size:26px;color:var(--ink);}
+  .doc-card p{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0;}
+  .doc-card ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.75;}
+  .doc-card .go{
+    margin-top:auto;display:inline-flex;align-items:center;gap:8px;
+    font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--signal);
+  }
+  .doc-card .go svg{transition:transform .2s;}
+  .doc-card:hover .go svg{transform:translateX(4px);}
+
+  /* leaderboard */
+  .leaderboard{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:36px;
+  }
+  .leaderboard-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:28px;}
+  .leaderboard-head h3{font-size:24px;}
+  .leaderboard-head span{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+  .bar-row{margin-bottom:22px;}
+  .bar-row:last-child{margin-bottom:0;}
+  .bar-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:700;}
+  .bar-label .score{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-weight:500;}
+  .bar-track{height:14px;background:var(--bg-alt);border-radius:999px;overflow:hidden;border:1px solid var(--line);}
+  .bar-fill{height:100%;border-radius:999px;width:0;transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
+  .bar-fill.sl{background:linear-gradient(90deg,var(--energy),var(--energy-2));}
+  .bar-fill.fa{background:linear-gradient(90deg,var(--signal),#7CC1FF);}
+  .bar-fill.co{background:linear-gradient(90deg,var(--good),#8CF0CB);}
+  .leaderboard-note{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.7;}
+
+  /* ---------- ROADMAP ---------- */
+  .roadmap{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .road-track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:900px){.road-track{grid-template-columns:1fr;}}
+  .road-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;position:relative;
+  }
+  .road-card .range{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--energy-2);
+    letter-spacing:0.05em;margin-bottom:14px;display:block;
+  }
+  .road-card h3{font-size:24px;margin-bottom:12px;color:var(--ink);}
+  .road-card p{color:var(--muted);font-size:14px;line-height:1.7;margin:0;}
+  .road-card .phase-bar{height:6px;border-radius:999px;background:var(--bg-alt);margin-bottom:18px;overflow:hidden;}
+  .road-card .phase-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--energy),var(--signal));}
+
+  /* ---------- AUTHOR / FOOTER ---------- */
+  footer{padding:80px 0 40px;}
+  .author-card{
+    background:linear-gradient(135deg, rgba(255,68,38,0.12), rgba(46,143,255,0.10));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:44px;display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:center;
+    margin-bottom:56px;
+  }
+  .author-card h2{font-size:clamp(26px,4vw,38px);margin-bottom:10px;}
+  .author-card p{color:var(--muted);max-width:520px;font-size:15px;line-height:1.7;}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;}
+  .badge{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);
+    border:1px solid var(--line);padding:8px 12px;border-radius:8px;background:var(--bg);
+  }
+  .foot-links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:13px;padding-top:32px;border-top:1px solid var(--line);}
+  .foot-links a{color:var(--muted);transition:color .2s;}
+  .foot-links a:hover{color:var(--energy-2);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span>PLOTLY LENDER EVAL</div>
+    <nav class="links">
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#evidence">Evidence Facts</a>
+      <a href="#findings">Findings</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#author">Author</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/emcdo411/plotly-lender-eval" target="_blank" rel="noopener">View Repo</a>
+  </div>
+</header>
+
+<section class="hero" id="overview">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="pulse"></span>PRE-DEPLOYMENT CAPABILITY ASSESSMENT · JULY 2026</div>
+    <h1>NO HYPE.<br>ALL <span class="accent">SIGNAL.</span></h1>
+    <p class="hero-sub">
+      A public-signal, evidence-tagged evaluation of whether <strong>Plotly Skills</strong> earns a real seat inside a regulated title and lending stack.
+      Every claim carries a confidence tag. Every gap gets a name. No vendor gets picked before the problem is documented.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/emcdo411/plotly-lender-eval/blob/main/ci-eval.md" target="_blank" rel="noopener">Read the Full Eval →</a>
+      <a class="btn btn-ghost" href="https://github.com/emcdo411/plotly-lender-eval/blob/main/competitive-ai-readiness-scan.md" target="_blank" rel="noopener">See the Competitive Scan</a>
+    </div>
+  </div>
+  <div class="stat-strip wrap">
+    <div class="stat"><span class="num" data-count="3">0</span><span class="label">Layer Diagnostic</span></div>
+    <div class="stat"><span class="num" data-count="4">0</span><span class="label">Claim Tags</span></div>
+    <div class="stat"><span class="num" data-count="3">0</span><span class="label">Companies Scanned</span></div>
+    <div class="stat"><span class="num"><span data-count="0">0</span>–<span data-count="4">4</span></span><span class="label">Maturity Scale</span></div>
+    <div class="stat"><span class="num"><span data-count="30">0</span>-<span data-count="90">0</span></span><span class="label">Day Sequencing</span></div>
+    <div class="stat"><span class="num" data-count="0">0<span class="unit">%</span></span><span class="label">Vendors Pre-Picked</span></div>
+  </div>
+</section>
+
+<section class="method" id="method">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">The Method</span>
+      <h2>Three Gates. One Standard.</h2>
+      <p>Every finding in this repo runs through the same sequential diagnostic before it's allowed to ship. No layer gets skipped, and no tool gets named until the first two clear.</p>
+    </div>
+    <div class="method-grid">
+      <div class="method-card reveal">
+        <span class="method-num">01</span>
+        <span class="tag mono">MOC v4.9</span>
+        <h3>Ambient Signal Read</h3>
+        <p>Reads the market-wide signal, scores opportunity fit against the actual use case, and names the hard blockers up front. Interest in a capability and readiness to deploy it are treated as two different timelines.</p>
+      </div>
+      <div class="method-card reveal">
+        <span class="method-num">02</span>
+        <span class="tag mono">FCPB v2.9</span>
+        <h3>Subtraction Audit</h3>
+        <p>The Fraser Gate asks one question before anything else: does this tool remove complexity from the stack, or add to it? Unscoreable until the incumbent BI environment is mapped, so it doesn't get scored early.</p>
+      </div>
+      <div class="method-card reveal">
+        <span class="method-num">03</span>
+        <span class="tag mono">FCI v2.3</span>
+        <h3>Positioning Gate</h3>
+        <p>Keeps the output problem-first, not vendor-first. Every claim is tagged by confidence level instead of stated as settled fact, because that's the moment a proof-of-work document loses the room.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="facts-section" id="evidence">
+  <div class="wrap">
+    <div class="facts-wrap">
+      <div>
+        <div class="section-head reveal">
+          <span class="kicker">Signature System</span>
+          <h2>Evidence Facts</h2>
+          <p>Every factual claim in this repo carries one of four tags. Nothing ships labeled as certain when it isn't.</p>
+        </div>
+        <div class="facts-copy reveal">
+          <p>This is the same discipline a compliance reviewer applies to a vendor pitch, just run against our own document first. If a claim can't be traced to a public source, it doesn't get to sound like one.</p>
+          <ul>
+            <li>Confirmed capability claims cite the company's own statements or press.</li>
+            <li>Inferred claims are marked as inference, not fact.</li>
+            <li>Unconfirmed ideas are labeled a hypothesis, not a finding.</li>
+            <li>Absence of evidence is reported as exactly that, not treated as proof something doesn't exist.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="label-box">
+          <h3>Evidence Facts</h3>
+          <div class="label-sub thick"><span>Serving Size</span><span>1 Claim</span></div>
+          <div class="label-sub"><span>Claims Per Document</span><span>Varies</span></div>
+          <div class="label-sub" style="border-bottom:5px solid var(--ink-on-paper); margin-bottom:6px;"><span>Confidence Tags</span><span>4</span></div>
+
+          <div class="tag-row">
+            <span class="tag-name verified">PUBLIC-VERIFIED</span>
+            <span class="tag-desc">Confirmed via company statements or press</span>
+          </div>
+          <div class="tag-row">
+            <span class="tag-name inferred">INFERRED-PUBLIC</span>
+            <span class="tag-desc">Reasonable inference from a verified signal</span>
+          </div>
+          <div class="tag-row">
+            <span class="tag-name hypothesis">HYPOTHESIS</span>
+            <span class="tag-desc">Plausible, not yet confirmed</span>
+          </div>
+          <div class="tag-row">
+            <span class="tag-name absence">ABSENCE OF EVIDENCE</span>
+            <span class="tag-desc">Nothing found publicly, not proof of absence</span>
+          </div>
+
+          <div class="label-footnote">* Not a significant source of spin. This label applies to every table, verdict, and score in both documents in this repository.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="findings" id="findings">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">The Findings</span>
+      <h2>Two Documents. Zero Spin.</h2>
+      <p>The full breakdown lives in two evidence-tagged markdown files. Here's what's inside each one.</p>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card reveal">
+        <span class="file-tag">ci-eval.md</span>
+        <h3>Plotly Skills: Fit Evaluation</h3>
+        <p>Runs Plotly's native Skills capability through all three gates against a regulated client integrations use case.</p>
+        <ul>
+          <li>Opportunity fit: moderate-to-strong, a textbook Plotly/Dash use case on paper</li>
+          <li>Hard blocker: any tool touching loan-level data needs security and compliance review first</li>
+          <li>Sequencing: observe days 1-30, name the gap days 30-60, evaluate 2-3 tools days 60-90</li>
+          <li>Verdict: sound to share as a working document, commits to no procurement decision</li>
+        </ul>
+        <a class="go" href="https://github.com/emcdo411/plotly-lender-eval/blob/main/ci-eval.md" target="_blank" rel="noopener">Read the Eval
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="doc-card reveal">
+        <span class="file-tag">competitive-ai-readiness-scan.md</span>
+        <h3>Competitive AI-Readiness Scan</h3>
+        <p>A public-signal maturity comparison across ServiceLink, First American, and Cotality, scored on a 0-4 AWSS-style scale.</p>
+        <ul>
+          <li>4 dimensions scored: public AI visibility, named data partnerships, thought leadership, platform modernization</li>
+          <li>EXOS is verified as a genuinely strong core platform, the gap is communications, not necessarily technology</li>
+          <li>No public evidence either competitor uses Plotly, this scan does not build a case for any one tool</li>
+        </ul>
+        <a class="go" href="https://github.com/emcdo411/plotly-lender-eval/blob/main/competitive-ai-readiness-scan.md" target="_blank" rel="noopener">See the Scan
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="leaderboard reveal">
+      <div class="leaderboard-head">
+        <h3>AWSS Composite Leaderboard</h3>
+        <span class="mono">SCALE 0–16 · PUBLIC SIGNAL VISIBILITY ONLY</span>
+      </div>
+
+      <div class="bar-row">
+        <div class="bar-label"><span>Cotality</span><span class="score">14 / 16</span></div>
+        <div class="bar-track"><div class="bar-fill co" data-width="87.5"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label"><span>First American</span><span class="score">10 / 16</span></div>
+        <div class="bar-track"><div class="bar-fill fa" data-width="62.5"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label"><span>ServiceLink</span><span class="score">5 / 16</span></div>
+        <div class="bar-track"><div class="bar-fill sl" data-width="31.25"></div></div>
+      </div>
+
+      <div class="leaderboard-note">
+        This is a visibility and market-narrative score built from public statements, not a verified internal capability audit. ServiceLink's lower composite is explained structurally: it's a subsidiary without FAF's public-market disclosure incentives, and EXOS is a service-delivery platform rather than a product marketed to Wall Street. The score says less about the technology than it does about who has a reason to announce it.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">The Next 90 Days</span>
+      <h2>Map First. Recommend Second.</h2>
+      <p>The sequencing that protects the credibility of any eventual recommendation, Plotly included.</p>
+    </div>
+    <div class="road-track">
+      <div class="road-card reveal">
+        <div class="phase-bar"><i style="width:33%;"></i></div>
+        <span class="range">DAYS 0–30</span>
+        <h3>Observe</h3>
+        <p>Document the existing reporting and BI stack inside the Client Integrations function before proposing anything new.</p>
+      </div>
+      <div class="road-card reveal">
+        <div class="phase-bar"><i style="width:66%;"></i></div>
+        <span class="range">DAYS 30–60</span>
+        <h3>Name the Gap</h3>
+        <p>Identify specific, named gaps the current stack does not close. No gap, no recommendation.</p>
+      </div>
+      <div class="road-card reveal">
+        <div class="phase-bar"><i style="width:100%;"></i></div>
+        <span class="range">DAYS 60–90</span>
+        <h3>Evaluate</h3>
+        <p>If a genuine gap exists, evaluate 2-3 candidate tools against it on documented criteria. Plotly among them, never assumed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="author">
+  <div class="wrap">
+    <div class="author-card reveal">
+      <div>
+        <h2>Erwin Maurice McDonald</h2>
+        <p>Founder, Epoch Frameworks LLC. AI Adoption Architect and Behavioral Intelligence Architect working at the intersection of regulated financial services, enterprise BI, and AI governance.</p>
+      </div>
+      <div class="badges">
+        <span class="badge">MOC v4.9</span>
+        <span class="badge">FCPB v2.9</span>
+        <span class="badge">FCI v2.3</span>
+        <span class="badge">DACR License v2.6</span>
+      </div>
+    </div>
+
+    <div class="foot-links">
+      <span>© 2026 Epoch Frameworks LLC. Public-signal analysis only. No non-public ServiceLink information was used or implied.</span>
+      <span>
+        <a href="https://github.com/emcdo411/plotly-lender-eval" target="_blank" rel="noopener">GitHub Repo</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/emcdo411" target="_blank" rel="noopener">@emcdo411</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  // Bar fill animation
+  const bars = document.querySelectorAll('.bar-fill');
+  const barIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const w = e.target.getAttribute('data-width');
+        e.target.style.width = w + '%';
+        barIo.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  bars.forEach(b => barIo.observe(b));
+
+  // Stat counters
+  const counters = document.querySelectorAll('[data-count]');
+  const countIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.getAttribute('data-count'), 10);
+        const unitEl = el.querySelector('.unit');
+        const duration = 900;
+        const start = performance.now();
+        function tick(now){
+          const p = Math.min((now - start) / duration, 1);
+          const val = Math.round(target * p);
+          el.childNodes[0].nodeValue = val;
+          if(p < 1){ requestAnimationFrame(tick); }
+          else { el.childNodes[0].nodeValue = target; }
+        }
+        if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+          el.childNodes[0].nodeValue = target;
+        } else {
+          requestAnimationFrame(tick);
+        }
+        countIo.unobserve(el);
+      }
+    });
+  }, {threshold:0.5});
+  counters.forEach(c => countIo.observe(c));
+</script>
+
+</body>
+</html>
